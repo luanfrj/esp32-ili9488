@@ -313,11 +313,41 @@ void init_lcd()
     send_data(0x2C);
     delay_ms(100);
     
+    // Interface
+    send_command(0xB0);
+    send_data(0x00);
+    delay_ms(100);
+    
     // set framerate
     send_command(0xB1);
     send_data(0xA0);
     send_data(0x11);
     delay_ms(50);
+    
+    // inversion control
+    send_command(0xB4);
+    send_data(0x02);
+    delay_ms(100);
+    
+    // Display Function Control
+    send_command(0xB6);
+    send_data(0x02);
+    send_data(0x02);
+    send_data(0x3B);
+    delay_ms(100);
+    
+    // Entry Mode 
+    send_command(0xB7);
+    send_data(0xC6);
+    delay_ms(100);
+    
+    // Adjustment Control 3
+    send_command(0xF7);
+    send_data(0xA9);
+    send_data(0x51);
+    send_data(0x2C);
+    send_data(0x82);
+    delay_ms(100);
     
     set_bgcolor(0, 0, 0);
     
