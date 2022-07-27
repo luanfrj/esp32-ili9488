@@ -136,14 +136,15 @@ void set_bgcolor(unsigned char r, unsigned char g, unsigned char b)
      // write data command
     send_command(0x2C);
     
+    unsigned char dh = (r & 0xF8) | ((g >> 5) & 0x07);
+    unsigned char dl = ((g & 0xFC) << 3) | ((b >> 3) & 0x1F) ;
     // send color
     for (i = 0; i < 320; i++)
     {
         for (j = 0; j < 480; j++)
         {
-            send_data(r);
-            send_data(g);
-            send_data(b);
+            send_data(dh);
+            send_data(dl);
         }
     }
 }
@@ -185,9 +186,11 @@ void write_pixel(unsigned short x, unsigned short y,
 {
     set_address(x, y);
     send_command(0x2C);
-    send_data(r);
-    send_data(g);
-    send_data(b); 
+    
+    unsigned char dh = (r & 0xF8) | ((g >> 5) & 0x07);
+    unsigned char dl = ((g & 0xFC) << 3) | ((b >> 3) & 0x1F) ;
+    send_data(dh);
+    send_data(dl);
 }
 
 // write char row
@@ -268,7 +271,7 @@ void init_lcd()
     
     // set dbi
     send_command(0x3A);
-    send_data(0x77);
+    send_data(0x55);
     delay_ms(100);
     
     // partial mode on
