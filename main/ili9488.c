@@ -263,6 +263,25 @@ void init_lcd()
     // sleep out
     send_command(0x11);
     delay_ms(100);
+
+    // Power Control 1 
+    send_command(0xC0);
+    send_data(0x10);
+    send_data(0x10);
+    delay_ms(100);
+
+    // Power Control 2 
+    send_command(0xC1);
+    send_data(0x41);
+    delay_ms(100);
+
+    // VCOM  Control 1
+    send_command(0xC5);
+    send_data(0x00);
+    send_data(0x22);
+    send_data(0x80);
+    send_data(0x40);
+    delay_ms(100);
     
     // memory acces control
     send_command(0x36);
@@ -320,7 +339,7 @@ void init_lcd()
     
     // set framerate
     send_command(0xB1);
-    send_data(0xA0);
+    send_data(0xB0);
     send_data(0x11);
     delay_ms(50);
     
