@@ -36,6 +36,22 @@ void app_main()
 
   write_string("LUAN", 0, 180, 199, 67, 209);
 
+  for (int i = 0; i < 320; i++) {
+    for (int j = 201; j < 230; j++) {
+      write_pixel(i, j, i, 0, 0);
+    }
+  }
+  for (int i = 0; i < 320; i++) {
+    for (int j = 231; j < 260; j++) {
+      write_pixel(i, j, 0, i, 0);
+    }
+  }
+  for (int i = 0; i < 320; i++) {
+    for (int j = 261; j < 290; j++) {
+      write_pixel(i, j, 0, 0, i);
+    }
+  }
+
   // while(1) {
   //   printf("Aguardando...\n");
   //   delay_ms(2000);
