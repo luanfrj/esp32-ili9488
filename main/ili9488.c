@@ -5,6 +5,7 @@
 #include "sdkconfig.h"
 #include "ili9488.h"
 #include "font_table.h"
+#include <rom/ets_sys.h>
 
 #define dir_mask (\
     (1 << LCD_DATA_BIT0) | \
@@ -114,7 +115,9 @@ void send_command(unsigned char cmd)
 {
     GPIO.out_w1tc = (1 << LCD_CS) | (1 << LCD_RS) | (1 << LCD_WR) | (1 << LCD_RD);
     GPIO.out_w1ts = (1 << LCD_RST) | (1 << LCD_RD);
+    ets_delay_us(1);
     copy_data_to_gpio(cmd);
+    ets_delay_us(1);
     GPIO.out_w1ts = (1 << LCD_WR);
 }
 
@@ -125,7 +128,9 @@ void send_data(unsigned char data)
 {
     GPIO.out_w1tc = (1 << LCD_CS) | (1 << LCD_RS) | (1 << LCD_WR) | (1 << LCD_RD);
     GPIO.out_w1ts = (1 << LCD_RST) | (1 << LCD_RS) | (1 << LCD_RD);
+    ets_delay_us(1);
     copy_data_to_gpio(data);
+    ets_delay_us(1);
     GPIO.out_w1ts = (1 << LCD_WR);
 }
 
