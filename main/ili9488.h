@@ -15,6 +15,9 @@
 #define LCD_WR	        27      // Rise edge write
 #define LCD_RD	        26      // Rise edge read
 
+// Define se vai usar 16 bits por pixel. Comente a linha abaixo para usar 18 bits por pixel
+//#define BITS_PIXEL_16
+
 void setup_lcd_pins();
 
 void init_lcd();

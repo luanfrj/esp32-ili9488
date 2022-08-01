@@ -135,7 +135,10 @@ void set_bgcolor(unsigned char r, unsigned char g, unsigned char b)
     unsigned short i, j;
      // write data command
     send_command(0x2C);
-    
+
+    // send color
+
+#if defined(BITS_PIXEL_16)
     unsigned char dh = (r & 0xF8) | ((g >> 5) & 0x07);
     unsigned char dl = ((g & 0xFC) << 3) | ((b >> 3) & 0x1F) ;
     // send color
@@ -147,6 +150,18 @@ void set_bgcolor(unsigned char r, unsigned char g, unsigned char b)
             send_data(dl);
         }
     }
+#else
+    for (i = 0; i < 320; i++)
+    {
+        for (j = 0; j < 480; j++)
+        {
+            send_data(r);
+            send_data(g);
+            send_data(b);
+        }
+    }
+#endif
+
 }
 
 // set address
@@ -186,11 +201,18 @@ void write_pixel(unsigned short x, unsigned short y,
 {
     set_address(x, y);
     send_command(0x2C);
-    
+
+#if defined(BITS_PIXEL_16)
     unsigned char dh = (r & 0xF8) | ((g >> 5) & 0x07);
     unsigned char dl = ((g & 0xFC) << 3) | ((b >> 3) & 0x1F) ;
     send_data(dh);
     send_data(dl);
+#else
+    send_data(r);
+    send_data(g);
+    send_data(b); 
+#endif
+
 }
 
 // write char row
@@ -286,7 +308,11 @@ void init_lcd()
     
     // set dbi
     send_command(0x3A);
+#if defined(BITS_PIXEL_16)
     send_data(0x55);
+#else
+    send_data(0x77);
+#endif
     delay_ms(5);
     
     // set brightness
