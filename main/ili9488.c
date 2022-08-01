@@ -5,7 +5,6 @@
 #include "sdkconfig.h"
 #include "ili9488.h"
 #include "font_table.h"
-#include <rom/ets_sys.h>
 
 #define dir_mask (\
     (1 << LCD_DATA_BIT0) | \
@@ -115,9 +114,7 @@ void send_command(unsigned char cmd)
 {
     GPIO.out_w1tc = (1 << LCD_CS) | (1 << LCD_RS) | (1 << LCD_WR) | (1 << LCD_RD);
     GPIO.out_w1ts = (1 << LCD_RST) | (1 << LCD_RD);
-    ets_delay_us(1);
     copy_data_to_gpio(cmd);
-    ets_delay_us(1);
     GPIO.out_w1ts = (1 << LCD_WR);
 }
 
@@ -128,9 +125,7 @@ void send_data(unsigned char data)
 {
     GPIO.out_w1tc = (1 << LCD_CS) | (1 << LCD_RS) | (1 << LCD_WR) | (1 << LCD_RD);
     GPIO.out_w1ts = (1 << LCD_RST) | (1 << LCD_RS) | (1 << LCD_RD);
-    ets_delay_us(1);
     copy_data_to_gpio(data);
-    ets_delay_us(1);
     GPIO.out_w1ts = (1 << LCD_WR);
 }
 
@@ -263,11 +258,7 @@ void init_lcd()
     
     // software reset
     send_command(0x01);
-    delay_ms(100);
-    
-    // sleep out
-    send_command(0x11);
-    delay_ms(100);
+    delay_ms(100);  
 
     // Power Control 1 
     send_command(0xC0);
@@ -298,35 +289,6 @@ void init_lcd()
     send_data(0x55);
     delay_ms(100);
     
-    // partial mode on
-    send_command(0x13);
-    delay_ms(100);
-    
-    // display on
-    send_command(0x29);
-    delay_ms(100);
-    
-    // set cursor
-    send_command(0x2A);
-    // set start x
-    send_data(0x00);
-    send_data(0x00);
-    // set end x
-    send_data(0x01);
-    send_data(0x3F);
-    send_command(0x00);
-    
-    send_command(0x2B);
-    // set start y
-    send_data(0x00);
-    send_data(0x00);
-    // set end y
-    send_data(0x01);
-    send_data(0xDF);
-    send_command(0x00);
-    
-    delay_ms(100);
-   
     // set brightness
     send_command(0x51);
     send_data(0x0F);
@@ -372,6 +334,38 @@ void init_lcd()
     send_data(0x2C);
     send_data(0x82);
     delay_ms(100);
+
+    // sleep out
+    send_command(0x11);
+    delay_ms(150);
+
+    // display on
+    send_command(0x29);
+
+    // 0x38 Idle Mode OFF
+    send_command(0x38);
+
+    // normal mode on
+    send_command(0x13);
+   
+    // set cursor
+    send_command(0x2A);
+    // set start x
+    send_data(0x00);
+    send_data(0x00);
+    // set end x
+    send_data(0x01);
+    send_data(0x3F);
+    send_command(0x00);
+    
+    send_command(0x2B);
+    // set start y
+    send_data(0x00);
+    send_data(0x00);
+    // set end y
+    send_data(0x01);
+    send_data(0xDF);
+    send_command(0x00);
     
     set_bgcolor(0, 0, 0);
     
