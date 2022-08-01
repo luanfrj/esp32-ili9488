@@ -36,17 +36,17 @@ void app_main()
 
   write_string("LUAN", 0, 180, 199, 67, 209);
 
-  for (int i = 0; i < 320; i++) {
+  for (int i = 0; i < 256; i++) {
     for (int j = 201; j < 261; j++) {
       write_pixel(i, j, i, 0, 0);
     }
   }
-  for (int i = 0; i < 320; i++) {
+  for (int i = 0; i < 256; i++) {
     for (int j = 261; j < 321; j++) {
       write_pixel(i, j, 0, i, 0);
     }
   }
-  for (int i = 0; i < 320; i++) {
+  for (int i = 0; i < 256; i++) {
     for (int j = 321; j < 381; j++) {
       write_pixel(i, j, 0, 0, i);
     }

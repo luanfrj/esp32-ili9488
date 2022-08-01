@@ -275,12 +275,13 @@ void init_lcd()
 {
     // reset LCD
     gpio_set_level(LCD_RST, 0);
-    delay_ms(100);
+    delay_ms(150);
     gpio_set_level(LCD_RST, 1);
+    delay_ms(150);
     
     // software reset
     send_command(0x01);
-    delay_ms(5);  
+    delay_ms(150);  
 
     // Power Control 1 
     send_command(0xC0);
