@@ -258,18 +258,18 @@ void init_lcd()
     
     // software reset
     send_command(0x01);
-    delay_ms(100);  
+    delay_ms(5);  
 
     // Power Control 1 
     send_command(0xC0);
     send_data(0x10);
     send_data(0x10);
-    delay_ms(100);
+    delay_ms(5);
 
     // Power Control 2 
     send_command(0xC1);
     send_data(0x41);
-    delay_ms(100);
+    delay_ms(5);
 
     // VCOM  Control 1
     send_command(0xC5);
@@ -277,32 +277,32 @@ void init_lcd()
     send_data(0x22);
     send_data(0x80);
     send_data(0x40);
-    delay_ms(100);
+    delay_ms(5);
     
     // memory acces control
     send_command(0x36);
     send_data(0x48);
-    delay_ms(100);
+    delay_ms(5);
     
     // set dbi
     send_command(0x3A);
     send_data(0x55);
-    delay_ms(100);
+    delay_ms(5);
     
     // set brightness
     send_command(0x51);
     send_data(0x0F);
-    delay_ms(100);
+    delay_ms(5);
     
     // set brightness control
     send_command(0x53);
     send_data(0x2C);
-    delay_ms(100);
+    delay_ms(5);
     
     // Interface
     send_command(0xB0);
     send_data(0x00);
-    delay_ms(100);
+    delay_ms(5);
     
     // set framerate
     send_command(0xB1);
@@ -313,19 +313,19 @@ void init_lcd()
     // inversion control
     send_command(0xB4);
     send_data(0x02);
-    delay_ms(100);
+    delay_ms(5);
     
     // Display Function Control
     send_command(0xB6);
     send_data(0x02);
     send_data(0x02);
     send_data(0x3B);
-    delay_ms(100);
+    delay_ms(5);
     
     // Entry Mode 
     send_command(0xB7);
     send_data(0xC6);
-    delay_ms(100);
+    delay_ms(5);
     
     // Adjustment Control 3
     send_command(0xF7);
